@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import io.edgarcode.timeselector.Utils.DateUtil;
 import io.edgarcode.timeselector.Utils.ScreenUtil;
@@ -79,8 +80,15 @@ public class TimeSelector {
         this(context,resultHandler, "1970-01-01 00:00", "2100-11-29 23:59");
     }
 
-    public void setTextColor(int color) {
+    public TimeSelector setTextColor(int color) {
         this.color = color;
+        return this;
+    }
+    public TimeSelector setSelectedTime(Date date) {
+        if(date != null) {
+            selectedCalender.setTime(date);
+        }
+        return this;
     }
     /**
      * @param context
@@ -124,8 +132,6 @@ public class TimeSelector {
         initTimer();
         addListener();
         seletorDialog.show();
-
-
     }
 
     private void initDialog() {
@@ -189,7 +195,6 @@ public class TimeSelector {
         endDay = endCalendar.get(Calendar.DAY_OF_MONTH);
         endHour = endCalendar.get(Calendar.HOUR_OF_DAY);
         endMininute = endCalendar.get(Calendar.MINUTE);
-        selectedCalender.setTime(Calendar.getInstance().getTime());
     }
 
     private void initTimer() {
@@ -337,11 +342,11 @@ public class TimeSelector {
         hour_pv.setData(hour);
         minute_pv.setData(minute);
 
-        year_pv.setSelected(Calendar.getInstance().get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR));
-        month_pv.setSelected(Calendar.getInstance().get(Calendar.MONTH));
-        day_pv.setSelected(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-        hour_pv.setSelected(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
-        minute_pv.setSelected(Calendar.getInstance().get(Calendar.MINUTE));
+        year_pv.setSelected(selectedCalender.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR));
+        month_pv.setSelected(selectedCalender.get(Calendar.MONTH));
+        day_pv.setSelected(selectedCalender.get(Calendar.DAY_OF_MONTH));
+        hour_pv.setSelected(selectedCalender.get(Calendar.HOUR_OF_DAY));
+        minute_pv.setSelected(selectedCalender.get(Calendar.MINUTE));
         excuteScroll();
     }
 
